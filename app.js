@@ -1,48 +1,24 @@
-var app = angular.module('myApp',[]);
+var app = angular.module('liveScoreApp',['ui.router']);
 //app.value(KEY_ID, "e225fd62154641df886b29b946d8c36c");
-app.factory('apiService', ['$http', '$q', function ($http, $q) {
-    var apiService = {};
-    var footBallData = function () {
-        var deferred = $q.defer();
-        $http({
-        	method: 'GET',
-        	headers: { 'X-Auth-Token': 'e225fd62154641df886b29b946d8c36c' },
-        	url: "http://api.football-data.org/v1/soccerseasons",
-        	params: {apiKey: "e225fd62154641df886b29b946d8c36c"}
-        	
-        }).then(function (response) {
-            deferred.resolve(response);
-        },
-            function (error) {
-                deferred.reject(error);
-            }
-        );
-        return deferred.promise;
-    };
-    var fetchCompTeams = function(compId){
-    	var deferred = $q.defer();
-    	$http({
-    		method: 'GET',
-    		headers: {'X-Auth-Token': 'e225fd62154641df886b29b946d8c36c'},
-    		url: "http://api.football-data.org/v1/competitions/"+compId+"/leagueTable",
-    		params: {apiKey: "e225fd62154641df886b29b946d8c36c"}
-    	}).then(function(response){
-    		deferred.resolve(response);
-    	},
-    		function(error){
-    			deferred.reject(error);
-    		}
-    	);
-    	return deferred.promise;
-    };
 
-    apiService.footBallData = footBallData;
-    apiService.fetchCompTeams = fetchCompTeams;
-    return apiService;
-}]);
+app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+	$stateProvider
+		.state('dashboard', {
+			url: '/dashboard',
+			templateUrl: 'dashboard.html',
+			controller: 'dashboardCtrl'
+		})
+		.state('dashboard.competition', {
+			url: '/competition',
+			controller: 'dashboardCtrl',
+			templateUrl: 'templates/competition.html'
+		});
+	$urlRouterProvider.otherwise('/dashboard/competition');
+}])
 
-app.controller('dashboardCtrl',function ($scope,$http,apiService ) {
+app.controller('dashboardCtrl',function ($scope,$http,apiService) {
 	$scope.comp_list = [];
+	$scope.competition = {};
 	apiService.footBallData().then(function(data) {
         console.log(" success!", data);
         console.log(" length", data.data.length);
