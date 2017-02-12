@@ -1,0 +1,39 @@
+<div class="main" >
+	<div class="comp_dashboard text-center"><img class="img-responsive" ng-src="{{teamDetail.crestUrl}}" style="width: 50px! important; height: 50px !important" alt="crest "> Team {{teamDetail.name}}
+	</div>
+
+	<table class="table">
+		<tr >
+			<td> <div class="comp_list text-center" style="font-size: x-large;">Players list</div> </td>
+			<td> <div class="comp_list text-center" style="font-size: x-large;">Upcoming fixtures</div> </td>
+		</tr>
+		<tr>
+			<td>
+				<div class="row comp_list" style="border-top: 5px solid #ff0059;">
+				<div class="col-sm-6">Name</div>
+				<div class="col-sm-3">DOB</div>
+				<div class="col-sm-3">Nationality</div>
+			</div>
+			<div class="row comp_list" ng-repeat="player in dashboard.player">
+				<div class="col-sm-6">{{player.name}}</div>
+				<div class="col-sm-3">{{player.dateOfBirth}}</div>
+				<div class="col-sm-3">{{player.nationality}}</div>
+			</div>
+			</td>
+			<td>
+				<div class="row comp_list" style="border-top: 5px solid #ff0059;">
+				<div class="col-sm-4">Next fixture</div>
+				<div class="col-sm-4">Date scheduled</div>
+				<div class="col-sm-4">Time left</div>
+			</div>
+			<div class="row comp_list" ng-repeat="fixture in dashboard.fixture | filter: {status: 'SCHEDULED'} | limitTo: 5">
+				<!-- <div class="col-sm-4">{{fixture.awayTeamName == teamDetail.name? fixture.homeTeamName : fixture.awayTeamName}}</div> -->
+				<div class="col-sm-4">{{teamDetail.name | teamFilter : fixture}}</div>
+				<div class="col-sm-4">{{fixture.date | date : format: "yyyy/MM/dd"}}</div>
+				<div class="col-sm-4" countdown='' date='{{fixture.date}}'></div>
+			</div>
+			</td>
+		</tr>
+	</table>
+	<p style="height: 10vh"></p>
+</div>

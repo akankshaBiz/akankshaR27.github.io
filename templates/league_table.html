@@ -1,0 +1,64 @@
+<div class="main">
+	<div class="comp_dashboard text-center"> {{dashboard.leagueCaption}} Dashboard</div>
+
+	<div ng-show="standingList">
+		<div class="row comp_list" style="border-top: 5px solid #ff0059;">
+			<div class="col-sm-1">Rank</div>
+			<div class="col-sm-3">Club with image</div>
+			<div class="col-sm-1">Played</div>
+			<div class="col-sm-1">Won</div>
+			<div class="col-sm-1">Drawn</div>
+			<div class="col-sm-1">Lost</div>
+			<div class="col-sm-1">GF</div>
+			<div class="col-sm-1">GA</div>
+			<div class="col-sm-1">GD</div>
+			<div class="col-sm-1">Points</div>
+		</div>
+		
+		<div class="row comp_list" ng-repeat="team in dashboard.leagueStanding">
+			
+			<div class="col-sm-1">{{team.position}}</div>
+			<div class="col-sm-3"><img class="img-responsive" ng-src="{{team.crestURI}}" alt="crest"><a href="" ng-click="showTeamDetail(team._links.team.href)">{{team.teamName}}</a></div>
+			<div class="col-sm-1">{{team.playedGames}}</div>
+			<div class="col-sm-1">{{team.wins}}</div>
+			<div class="col-sm-1">{{team.draws}}</div>
+			<div class="col-sm-1">{{team.losses}}</div>
+			<div class="col-sm-1">{{team.goals}}</div>
+			<div class="col-sm-1">{{team.goalsAgainst}}</div>
+			<div class="col-sm-1">{{team.goalDifference}}</div>
+			<div class="col-sm-1">{{team.points}}</div>
+		</div>
+		<p></p>
+	</div>
+	<div ng-show="standingGroup">
+	<div ng-repeat="group in dashboard.leagueGroupStanding">
+		<div class="row comp_list" style="border-top: 5px solid #ff0059;">
+			<div class="col-sm-1">Group</div>
+			<div class="col-sm-1">Rank</div>
+			<div class="col-sm-3">Club with image</div>
+			<div class="col-sm-1">Played</div>
+			<div class="col-sm-1">GF</div>
+			<div class="col-sm-1">GA</div>
+			<div class="col-sm-1">GD</div>
+			<div class="col-sm-1">Points</div>
+		</div>
+		
+		<div class="row comp_list" ng-repeat="team in group">
+			<div class="col-sm-1">{{team.group}}</div>
+			<div class="col-sm-1">{{team.rank}}</div>
+			<div class="col-sm-3"><img class="img-responsive" ng-src="{{team.crestURI}}" alt="crest">{{team.team}}</div>
+			<div class="col-sm-1">{{team.playedGames}}</div>
+			<div class="col-sm-1">{{team.goals}}</div>
+			<div class="col-sm-1">{{team.goalsAgainst}}</div>
+			<div class="col-sm-1">{{team.goalDifference}}</div>
+			<div class="col-sm-1">{{team.points}}</div>
+		</div>
+		<p></p>
+		</div>
+	</div>
+	<div ng-show="noStandingList" style="height: 100vh">
+		<div class="row comp_list" style="border-top: 5px solid #ff0059;">
+			<div class="col-sm-10 text-center" >No Table Found</div>
+			</div>
+	</div>
+</div>

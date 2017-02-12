@@ -8,13 +8,13 @@
 			<div class="col-sm-2">Number of match days</div>
 			<div class="col-sm-2">Number of teams</div>
 		</div>
-		<div class="row comp_list" ng-repeat="comp_obj in comp_list">
+		<div class="row comp_list" id="list" ng-repeat="competition in dashboard.competitions">
 			
-			<div class="col-sm-5"><a href="" ng-click="fetchTeams(comp_obj.comp_ID)">{{comp_obj.comp_name}}</a></div>
-			<div class="col-sm-2">{{comp_obj.num_games}}</div>
-			<div class="col-sm-2">{{comp_obj.match_days}}</div>
-			<div class="col-sm-2">{{comp_obj.num_team}}</div>
+			<div class="col-sm-5"><a href="" ng-click="showLeagueTable(competition.leagueUrl)">{{competition.comp_name}}</a></div>
+			<div class="col-sm-2">{{competition.num_games}}</div>
+			<div class="col-sm-2">{{competition.match_days}}</div>
+			<div class="col-sm-2">{{competition.num_team}}</div>
 		</div>
 	</div>
-	<p></p>
+	<p style="height: 40vh"></p>
 </div>
