@@ -1,7 +1,7 @@
 var app = angular.module('liveScoreApp',['ui.router']);
 //app.value(KEY_ID, "e225fd62154641df886b29b946d8c36c");
 
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
 	$stateProvider
 		.state('dashboard', {
 			url: '/dashboard',
@@ -21,6 +21,18 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             templateUrl: 'templates/league_table.html'
         });
 	$urlRouterProvider.otherwise('/dashboard/competition');
+
+    $httpProvider.interceptors.push(function ($q) {
+        return {
+            'request': function (config) {
+                if (config.url.split(':')[0] === 'http') {
+                    config.url = config.url.replace('http', 'https')
+                }
+                return config || $q.when(config);
+            }
+
+        }
+    });
 }]);
 
 app.filter('teamFilter',function(){
